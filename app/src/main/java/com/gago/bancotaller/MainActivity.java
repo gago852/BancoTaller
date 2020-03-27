@@ -7,12 +7,20 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView rcCuentas;
+    ArrayList<Cuenta> listaCuentas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        rcCuentas= findViewById(R.id.rcCuentas);
+
+        listaCuentas=new ArrayList<>();
+        rcCuentas.setLayoutManager(new LinearLayoutManager(this));
+
+        if (listaCuentas.isEmpty()){
+            ArrayList<Cuenta> listaVacia=new ArrayList<>();
+            for (int i=0; i<15;i++){
+                listaVacia.add(new Cuenta("texto de ejemplo 1","texto de ejemplo2","texto de ejemplo3",i));
+            }
+            CuentaAdapter cuentaAdapterVacia=new CuentaAdapter(listaVacia);
+            rcCuentas.setAdapter(cuentaAdapterVacia);
+        }else{
+            Toast.makeText(getApplicationContext(),"aqui va si existe algo",Toast.LENGTH_SHORT).show();
+        }
+
 
 
     }
@@ -39,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_filtrar_usuario) {
             return true;
         }
+        if (id == R.id.action_saldo){
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

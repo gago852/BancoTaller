@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rcCuentas;
     ArrayList<Cuenta> listaCuentas;
+    CuentaAdapter cuentaAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             CuentaAdapter cuentaAdapterVacia = new CuentaAdapter(listaVacia);
             rcCuentas.setAdapter(cuentaAdapterVacia);
         } else {
-            CuentaAdapter cuentaAdapter = new CuentaAdapter(listaCuentas);
+            cuentaAdapter = new CuentaAdapter(listaCuentas);
             rcCuentas.setAdapter(cuentaAdapter);
         }
 
@@ -71,7 +74,21 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filtrar_usuario) {
-            return true;
+            SearchView searchView = (SearchView) item.getActionView();
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    cuentaAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+
         }
         if (id == R.id.action_saldo) {
             Collections.sort(listaCuentas, new Comparator<Cuenta>() {
@@ -86,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     return 0;
                 }
             });
-            CuentaAdapter cuentaAdapter= new CuentaAdapter(listaCuentas);
+            cuentaAdapter= new CuentaAdapter(listaCuentas);
             rcCuentas.setAdapter(cuentaAdapter);
         }
         if (id == R.id.action_agregar_cuenta) {

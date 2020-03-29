@@ -3,6 +3,8 @@ package com.gago.bancotaller;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CuentaAdapter extends RecyclerView.Adapter<CuentaAdapter.ViewHolderCuenta> {
+public class CuentaAdapter extends RecyclerView.Adapter<CuentaAdapter.ViewHolderCuenta> implements Filterable {
 
-    ArrayList<Cuenta> lista;
+    ArrayList<Cuenta> lista, listaLlena;
 
     public CuentaAdapter(ArrayList<Cuenta> lista) {
         this.lista = lista;
+        this.listaLlena = new ArrayList<>(lista);
     }
 
     @NonNull
@@ -38,6 +41,11 @@ public class CuentaAdapter extends RecyclerView.Adapter<CuentaAdapter.ViewHolder
         return lista.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return CuentaFilter;
+    }
+
 
     public class ViewHolderCuenta extends RecyclerView.ViewHolder {
 
@@ -51,4 +59,35 @@ public class CuentaAdapter extends RecyclerView.Adapter<CuentaAdapter.ViewHolder
             txtSaldo = itemView.findViewById(R.id.txtSaldo);
         }
     }
+
+    private Filter CuentaFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Cuenta> listaFiltrada = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                listaFiltrada.addAll(listaLlena);
+            } else {
+                String patronFiltrado = constraint.toString().toLowerCase().trim();
+
+                for (Cuenta cuenta : listaLlena) {
+                    if (cuenta.getNombreCliente().toLowerCase().contains(patronFiltrado)) {
+                        listaFiltrada.add(cuenta);
+                    }
+
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = listaFiltrada;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            lista.clear();
+            lista.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

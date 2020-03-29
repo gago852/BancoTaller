@@ -7,7 +7,8 @@
         android:orderInCategory="100"
         android:title="@string/action_filtrar_usuario"
         android:icon="@drawable/ic_action_search"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView"/>
     <item
         android:id="@+id/action_saldo"
         android:orderInCategory="100"

@@ -1,5 +1,6 @@
 package com.gago.bancotaller;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,22 +32,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        rcCuentas= findViewById(R.id.rcCuentas);
+        rcCuentas = findViewById(R.id.rcCuentas);
 
-        listaCuentas=new ArrayList<>();
+        Intent intentRetorno = getIntent();
+
+        listaCuentas = intentRetorno.getParcelableArrayListExtra("cuentas") == null
+                ? new ArrayList<Cuenta>() : intentRetorno.<Cuenta>getParcelableArrayListExtra("cuentas");
         rcCuentas.setLayoutManager(new LinearLayoutManager(this));
 
-        if (listaCuentas.isEmpty()){
-            ArrayList<Cuenta> listaVacia=new ArrayList<>();
-            for (int i=0; i<15;i++){
-                listaVacia.add(new Cuenta("texto de ejemplo 1","texto de ejemplo2","texto de ejemplo3",i));
+        if (listaCuentas.isEmpty()) {
+            ArrayList<Cuenta> listaVacia = new ArrayList<>();
+            for (int i = 0; i < 15; i++) {
+                listaVacia.add(new Cuenta("texto de ejemplo 1", "texto de ejemplo2", "texto de ejemplo3", i));
             }
-            CuentaAdapter cuentaAdapterVacia=new CuentaAdapter(listaVacia);
+            CuentaAdapter cuentaAdapterVacia = new CuentaAdapter(listaVacia);
             rcCuentas.setAdapter(cuentaAdapterVacia);
-        }else{
-            Toast.makeText(getApplicationContext(),"aqui va si existe algo",Toast.LENGTH_SHORT).show();
+        } else {
+            CuentaAdapter cuentaAdapter = new CuentaAdapter(listaCuentas);
+            rcCuentas.setAdapter(cuentaAdapter);
         }
-
 
 
     }
@@ -67,8 +73,26 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_filtrar_usuario) {
             return true;
         }
-        if (id == R.id.action_saldo){
-            return true;
+        if (id == R.id.action_saldo) {
+            Collections.sort(listaCuentas, new Comparator<Cuenta>() {
+                @Override
+                public int compare(Cuenta o1, Cuenta o2) {
+                    if (o1.getSaldo() < o2.getSaldo()){
+                        return -1;
+                    }
+                    if (o1.getSaldo() > o2.getSaldo()){
+                        return 1;
+                    }
+                    return 0;
+                }
+            });
+            CuentaAdapter cuentaAdapter= new CuentaAdapter(listaCuentas);
+            rcCuentas.setAdapter(cuentaAdapter);
+        }
+        if (id == R.id.action_agregar_cuenta) {
+            Intent i = new Intent(this, AgregarCuentaActivity.class);
+            i.putParcelableArrayListExtra("cuentas", listaCuentas);
+            startActivity(i);
         }
 
 

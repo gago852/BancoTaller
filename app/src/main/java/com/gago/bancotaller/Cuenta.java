@@ -89,7 +89,7 @@ public class Cuenta implements Parcelable {
                 "numero de cuenta='" + nroCuenta + '\'' +
                 ", nombre='" + nombreCliente + '\'' +
                 ", tipo de cuenta='" + tipoCuenta + '\'' +
-                ", saldo='" + saldo + '\''+
+                ", saldo='" + saldo + '\'' +
                 '}';
     }
 }

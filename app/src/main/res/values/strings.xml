@@ -3,12 +3,15 @@
     <string name="action_saldo">Organizar por saldos</string>
     <string name="action_filtrar_usuario">Filtrar por nombres</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_agregar_cuenta">Agregar Cuentas</string>
+    <string name="txtAgregar">AGREGAR CUENTA</string>
+    <string name="nrodeCuenta">Numero de la cuenta</string>
+    <string name="nombreCuenta">Nombre</string>
+    <string name="tipoAhorro">Ahorro</string>
+    <string name="tipoCorriente">Corriente</string>
+    <string name="saldo">Saldo</string>
+    <string name="tipoCuenta">Tipo de Cuenta</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="regresar">Regresar</string>
 </resources>

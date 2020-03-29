@@ -30,7 +30,7 @@ public class CuentaAdapter extends RecyclerView.Adapter<CuentaAdapter.ViewHolder
         holder.txtNombre.setText(lista.get(position).getNombreCliente());
         holder.txtNroCuenta.setText(lista.get(position).getNroCuenta());
         holder.txtTipoCuenta.setText(lista.get(position).getTipoCuenta());
-        holder.txtSaldo.setText(String.valueOf(lista.get(position).getSaldo()));
+        holder.txtSaldo.setText("$ " + String.valueOf(lista.get(position).getSaldo()));
     }
 
     @Override

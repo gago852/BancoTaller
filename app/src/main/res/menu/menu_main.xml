@@ -6,10 +6,17 @@
         android:id="@+id/action_filtrar_usuario"
         android:orderInCategory="100"
         android:title="@string/action_filtrar_usuario"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_search"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_saldo"
         android:orderInCategory="100"
         android:title="@string/action_saldo"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_agregar_cuenta"
+        android:orderInCategory="100"
+        android:title="@string/action_agregar_cuenta"
         app:showAsAction="never" />
 </menu>
